@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pkmn_app</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Team list</h1>
+    <table>
+      <% for(var i=0; i < data.length; i++) { %>
+         <tr>
+           <td><%= data[i].id %></td>
+           <td><%= data[i].name %></td>
+         </tr>
+      <% } %>
+    </table>
+    <p> <a href="/team/1/edit">Edit team 1</a></p>
+    <p> <a href="/team/2/edit">Edit team 2</a></p>
+    <p> <a href="/team/3/edit">Edit team 3</a></p>
+    <p> <a href="/">Home</a></p>
+  </body>
+</html>
