@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  database:
+    image: mysql:5.7
+    ports:
+        - "3306:3306"
+    command: --init-file /database/init.sql
+    volumes:
+        - ./init.sql:/database/init.sql
+    environment:
+        MYSQL_ROOT_USER: root
+        MYSQL_ROOT_PASSWORD: MyPass-1
+        MYSQL_DATABASE: pkmn
+        MYSQL_USER: root
+        MYSQL_PASSWORD: MyPass-1
+        
