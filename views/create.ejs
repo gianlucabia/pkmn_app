@@ -5,8 +5,43 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Team created correctly</h1>
-    <p>Name: <%= name%></p>
-    <p> <a href="/">Home</a></p>
+    
+    <h1> Create team</h1>
+
+    <button onclick=findPokemon()>Gotta catch'em all!</button>
+
+    <h2><span id="poke-name"></span></h2>
+    <p><span id="poke-exp"></span></p>
+    <p><span id="poke-img"></img></span></p>
+    <p><span id="poke-abt"></span></p>
+    <p><span id="poke-types"></span></p>
+
+    <form action="/team/create/createteam" method="GET">
+      <input type="text" name="name" required="required" placeholder="My Team">
+      <button type="submit">Create</button>
+    </form>
+
+    <script>
+
+      function findPokemon(){
+    
+        fetch('https://pokeapi.co/api/v2/pokemon/'+Math.floor(Math.random() * 897))
+        .then(function(response){
+          response.json()
+          .then(function(pokemon){
+            console.log(pokemon)
+            console.log(pokemon.name)
+            document.getElementById("poke-name").innerHTML = "Name: "+pokemon.name;
+            document.getElementById("poke-exp").innerHTML = "Base exp: "+pokemon.base_experience;
+            document.getElementById("poke-img").innerHTML = "<img src= "+pokemon.sprites.front_default+"></img>";
+            document.getElementById("poke-abt").innerHTML = pokemon.abilities.length;
+            document.getElementById("poke-types").innerHTML = pokemon.types.length;
+          })
+        })
+      }
+    </script>
+
+  <p> <a href="/">Home</a></p>
+
   </body>
 </html>

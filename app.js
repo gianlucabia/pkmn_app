@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routers
 var indexRouter = require('./routes/index');
 var createRouter = require('./routes/create');
+var createTeamRouter = require('./routes/createteam');
 var updateRouter = require('./routes/update');
 var listRouter = require('./routes/list');
 var teamRouter = require('./routes/team');
@@ -34,6 +35,7 @@ var teamRouter = require('./routes/team');
 app.use('/', indexRouter);
 app.use('/team/update', updateRouter);
 app.use('/team', teamRouter)
+app.use('/team/create/createteam', createTeamRouter);
 app.use('/team/create', createRouter);
 app.use('/team/list', listRouter);
 
