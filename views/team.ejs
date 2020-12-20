@@ -6,8 +6,17 @@
   </head>
   <body>
     <h1>Manage teams</h1>
-    <p> <a href="/team/create">Create team</a></p>
+
     <p> <a href="/team/list">Team list</a></p>
+    <br>
+    <p> Create team</a></p>
+
+    <form action="/team/create" method="GET">
+      <input type="text" name="name" placeholder="My Team">
+      
+      <button type="submit">Create</button>
+    </form>
+    
     <p> <a href="/">Home</a></p>
   </body>
 </html>

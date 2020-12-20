@@ -7,12 +7,19 @@
   <body>
     <h1>Team list</h1>
     <table>
+      <% var c=0 %>
       <% for(var i=0; i < data.length; i++) { %>
          <tr>
            <td><%= data[i].id %></td>
            <td><%= data[i].name %></td>
            <td> <a href=<%= data[i].id+"/edit" %>> Edit team </a></td>
+           <%= c++ %>
          </tr>
+      <% } %>
+      <% if(c==0) { %>
+        <tr>
+          <td>No teams created</td>
+        </tr>
       <% } %>
     </table>
     <p> <a href="/">Home</a></p>
