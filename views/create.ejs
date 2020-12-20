@@ -34,8 +34,18 @@
             document.getElementById("poke-name").innerHTML = "Name: "+pokemon.name;
             document.getElementById("poke-exp").innerHTML = "Base exp: "+pokemon.base_experience;
             document.getElementById("poke-img").innerHTML = "<img src= "+pokemon.sprites.front_default+"></img>";
-            document.getElementById("poke-abt").innerHTML = pokemon.abilities.length;
-            document.getElementById("poke-types").innerHTML = pokemon.types.length;
+
+            var abs = pokemon.abilities[0].ability.name
+            for(var i=1; i<pokemon.abilities.length; i++){
+              abs=abs+", "+pokemon.abilities[i].ability.name
+            }
+            document.getElementById("poke-abt").innerHTML = abs+".";
+
+            var t = pokemon.types[0].type.name
+            for(var i=1; i<pokemon.types.length; i++){
+              t=t+", "+pokemon.types[i].type.name
+            }
+            document.getElementById("poke-types").innerHTML = t+".";
           })
         })
       }
