@@ -7,7 +7,7 @@
   <body>
     
     <h1> Create team</h1>
-
+    <hr>
     <button onclick=findPokemon()>Gotta catch'em all!</button>
 
     <h2><span id="poke-name"></span></h2>
@@ -30,18 +30,17 @@
           response.json()
           .then(function(pokemon){
             console.log(pokemon)
-            console.log(pokemon.name)
-            document.getElementById("poke-name").innerHTML = "Name: "+pokemon.name;
-            document.getElementById("poke-exp").innerHTML = "Base exp: "+pokemon.base_experience;
+            document.getElementById("poke-name").innerHTML = "<b>Name:</b> "+pokemon.name;
+            document.getElementById("poke-exp").innerHTML = "<b>Base exp: </b>"+pokemon.base_experience;
             document.getElementById("poke-img").innerHTML = "<img src= "+pokemon.sprites.front_default+"></img>";
 
-            var abs = pokemon.abilities[0].ability.name
+            var abs = "<b>Abilities: </b> "+pokemon.abilities[0].ability.name
             for(var i=1; i<pokemon.abilities.length; i++){
               abs=abs+", "+pokemon.abilities[i].ability.name
             }
             document.getElementById("poke-abt").innerHTML = abs+".";
 
-            var t = pokemon.types[0].type.name
+            var t = "<b>Types: </b>"+pokemon.types[0].type.name
             for(var i=1; i<pokemon.types.length; i++){
               t=t+", "+pokemon.types[i].type.name
             }
