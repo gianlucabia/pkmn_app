@@ -35,10 +35,6 @@ app.use('/team', teamRouter)
 app.use('/team/create', createRouter);
 app.use('/team/list', listRouter);
 
-app.get('/team/:teamid', function(req, res, next) {
-  res.render('team-mgmt', { teamid: req.params.teamid});
-});
-
 app.get('/team/:teamid/edit', function(req, res, next) {
   if(!validator.isNumeric(req.params.teamid) || req.params.teamid == 0){
     res.send('Parameter error: invalid parameters');

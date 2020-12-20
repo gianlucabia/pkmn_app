@@ -1,15 +1,11 @@
-CREATE DATABASE IF NOT EXISTS pkmn;
+CREATE DATABASE pkmn;
 USE pkmn;
 
-CREATE TABLE IF NOT EXISTS teams(
+CREATE TABLE teams(
 id INT PRIMARY KEY,
 name VARCHAR (64)
 );
 
-INSERT INTO teams (id, name)
-VALUES ('1', 'rocket');
-
-INSERT INTO teams (id, name)
-VALUES ('2', 'hash');
+INSERT INTO teams VALUES ('1', 'rocket'), ('2', 'hash');
 
 
