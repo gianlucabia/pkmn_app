@@ -11,9 +11,21 @@
     <br>
     <p> Create team</a></p>
 
+    <script>
+      function findPokemon(id){
+        fetch('https://pokeapi.co/api/v2/pokemon/'+id)
+        .then(function(response){
+          response.json()
+          .then(function(pokemon){
+            console.log(pokemon)
+          })
+        })
+     }
+     findPokemon(5)
+    </script>
+
     <form action="/team/create" method="GET">
       <input type="text" name="name" required="required" placeholder="My Team">
-      
       <button type="submit">Create</button>
     </form>
     

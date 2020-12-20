@@ -6,13 +6,12 @@
   </head>
   <body>
     <h1>Edit team <%= name %></h1>
-    <p> Name:  </p>
-    <p> ID: <%= id %> </p>
-
-    <form action="/team/create" method="GET">
+    
+    <form action="/team/update" method="GET">
+      <input type="number" name="n" id="n" value="n" placeholder=<%= id %> disabled>
+      <input type="hidden" id="id" name="id" value= <%= id %> placeholder=<%= name %>>
       <input type="text" name="name" placeholder=<%= name %>>
-      
-      <button type="submit">Create</button>
+      <button type="submit">Update</button>
     </form>
     
     <p> <a href="/">Home</a></p>

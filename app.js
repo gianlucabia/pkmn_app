@@ -27,19 +27,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routers
 var indexRouter = require('./routes/index');
 var createRouter = require('./routes/create');
+var updateRouter = require('./routes/update');
 var listRouter = require('./routes/list');
 var teamRouter = require('./routes/team');
 
 app.use('/', indexRouter);
+app.use('/team/update', updateRouter);
 app.use('/team', teamRouter)
 app.use('/team/create', createRouter);
 app.use('/team/list', listRouter);
 
 app.get('/team/:teamid/edit', function(req, res, next) {
-  if(!validator.isNumeric(req.params.teamid) || req.params.teamid == 0){
+  if(!validator.isNumeric(req.params.teamid)){
     res.send('Parameter error: invalid parameters');
   }else{
-    db.query("SELECT * FROM teams WHERE id = " + req.params.teamid, (err, rows, fields) => {
+    db.query("SELECT * FROM teams WHERE id = "+ req.params.teamid+";", (err, rows, fields) => {
       if(err){
           res.send('Query error: ' + err.sqlMessage);
       }else{
