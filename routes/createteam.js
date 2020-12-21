@@ -70,7 +70,6 @@ router.get('/', function(req, res, next) {
                 res.render('createteam.ejs', {name: teamName, teamid: teamId});
               }
             });
-
           }          
         });
       }

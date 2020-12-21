@@ -9,20 +9,37 @@
     <hr>
     <table>
       <% var c=0 %>
+      <tr>
       <% for(var i=0; i < data.length; i++) { %>
-         <tr>
-           <td><%= data[i].id %></td>
-           <td><%= data[i].name %></td>
-           <td> <a href=<%= data[i].id+"/edit" %>> Edit team </a></td>
-           <% c++ %>
-         </tr>
+        
+          <% if (i==0) {%> 
+            <td> <a href=<%= data[i].id+"/edit" %>>Edit team </a></td>
+            <td><%= data[i].id %></td>
+            <td><%= data[i].name %></td>
+          <%} else { %>     
+            <% if (data[i].name!=data[i-1].name) {%>
+              </tr><tr>
+              <td> <a href=<%= data[i].id+"/edit" %>>Edit team </a></td>
+              <td><%= data[i].id %></td>
+              <td><%= data[i].name %></td>
+            <% } %> 
+
+          <% } %> 
+          <td><%= pokeData.pokemons[i].id %></td>
+          <% c++ %>
+
       <% } %>
+
+      </tr>
       <% if(c==0) { %>
         <tr>
           <td>No teams created</td>
         </tr>
       <% } %>
     </table>
+
+    <%= pokeData %>
+
     <p> <a href="/">Home</a></p>
   </body>
 </html>

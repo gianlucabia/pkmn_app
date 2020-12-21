@@ -68,7 +68,6 @@
         sessionStorage.setItem(pokemon.id, JSON.stringify(pokemon));
 
         // add pokemon to the list
-        //var li = document.createElement("li");
         var input = document.createElement("input");
         input.setAttribute('type','checkbox')
         input.setAttribute('id',pokemon.id)
@@ -80,10 +79,8 @@
         lbl.setAttribute('for', pokemon.id);
         lbl.appendChild(document.createTextNode(pokemon.name));
 
-        //li.appendChild(input);
         document.getElementById("poke-list").append(input);
         document.getElementById("poke-list").append(lbl);
-        //document.getElementById("poke-list").innerHTML = document.getElementById("poke-list").innerHTML + ("<li><input type= checkbox>"+pokemon.name+"</li>");
       }
 
     </script>
