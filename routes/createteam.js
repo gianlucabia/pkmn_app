@@ -27,49 +27,67 @@ router.get('/', function(req, res, next) {
           }
           else{
             var data = JSON.stringify(rows1);
-            console.log('Team inserted correctly: '+ data);
-            for (var key of Object.keys(req.query)) {
-              console.log(key + " -> " + req.query[key])
-              //insert into pokemon teamID, req.query[key]
-            }
-            res.render('createteam.ejs', {name: req.query.name, teamid: teamId});
+            console.log('Team created correctly: '+ data);
+            var teamName = req.query.name
+            delete req.query.name;
+            
+            // prepare insert query
+            var q=createQueryFromJson(teamId,req.query);
+
+            // add pokemon to team
+            db.query(q, (errq, rowsq, fields) => {
+              if(errq){
+                res.send('Query error: ' + errq.sqlMessage);
+              }else{
+                var dataq = JSON.stringify(rowsq);
+                console.log('Team inserted correctly: '+ dataq);                
+                res.render('createteam.ejs', {name: teamName, teamid: teamId});
+              }
+            });
           }
         });
       } else{
-        //query if db is not empty
+        // query if db is not empty
           db.query("INSERT INTO teams(id,name) SELECT MAX(id)+1,'"+req.query.name+"' FROM teams;", (err, rows, fields) => {
           if(err){
             res.send('Query error: ' + err.sqlMessage);
           }else{
             var data = JSON.stringify(rows);
-            console.log('Team inserted correctly: '+ data);
-            for (var key of Object.keys(req.query)) {
-              console.log(key + " -> " + req.query[key])
-              //insert teamID, pokeid
-            }
-            res.render('createteam.ejs', {name: req.query.name, teamid: teamId});
-          }
+            console.log('Team created correctly: '+ data);
+            var teamName = req.query.name
+            delete req.query.name;
+            
+            // prepare insert query
+            var q=createQueryFromJson(teamId,req.query);
+
+            // add pokemon to team
+            db.query(q, (errq, rowsq, fields) => {
+              if(errq){
+                res.send('Query error: ' + errq.sqlMessage);
+              }else{
+                var dataq = JSON.stringify(rowsq);
+                console.log('Team inserted correctly: '+ dataq);                
+                res.render('createteam.ejs', {name: teamName, teamid: teamId});
+              }
+            });
+
+          }          
         });
       }
     }
-    /*
-    var l = sessionStorage.length;
-    for (var i=0; i<l; i++){
-      var key = sessionStorage.key(0);
-      var pokeid = sessionStorage.getItem(key); 
-      sessionStorage.removeItem(key);
-      db.query("INSERT INTO pokemon VALUES ("+teamId+","+pokeId+");", (err, rows, fields) => {
-        if(err){
-          res.send('Query error: ' + err.sqlMessage);
-          console.log('Query error: ' + err.sqlMessage)
-        }else{
-          var data = JSON.stringify(rows);
-          console.log('Team inserted correctly: '+ data);
-          res.render('createteam.ejs', {name: req.query.name});
-        }
-      });
-    }*/
   });
 });
 
+function createQueryFromJson(teamid,obj){
+  // prepare insert query
+  var q = "INSERT INTO pokemon(teamid,pokeid) VALUES"
+  for (var key of Object.keys(obj)) {
+    console.log(key + " -> " + obj[key])
+    q = q+" ("+teamid+","+obj[key]+"),";
+  }
+  q = q.substring(0, q.length - 1);
+  q = q+";"
+  console.log('Query q '+ q);
+  return q;
+}
 module.exports = router;
