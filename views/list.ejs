@@ -9,26 +9,31 @@
     <hr>
     <table>
       <% var c=0 %>
+      <% var base_exp=0 %>
       <tr>
-      <% for(var i=0; i < data.length; i++) { %>
-        
-          <% if (i==0) {%> 
-            <td> <a href=<%= data[i].id+"/edit" %>>Edit team </a></td>
-            <td><%= data[i].id %></td>
-            <td><%= data[i].name %></td>
-          <%} else { %>     
-            <% if (data[i].name!=data[i-1].name) {%>
-              </tr><tr>
-              <td> <a href=<%= data[i].id+"/edit" %>>Edit team </a></td>
+        <% for(var i=0; i < data.length; i++) { %>
+          
+            <% if (i==0) {%> 
               <td><%= data[i].id %></td>
-              <td><%= data[i].name %></td>
+              <td><b><%= data[i].name %></b></td>
+              <td> <a href=<%= data[i].id+"/edit" %>>Edit team </a></td>
+            <%} else { %>     
+              <% if (data[i].name!=data[i-1].name) {%>
+                <td>Tot exp: <%= base_exp%></td>
+                </tr><tr>
+                <% base_exp=0%>
+                <td><%= data[i].id %></td>
+                <td><b><%= data[i].name %></b></td>
+                <td> <a href=<%= data[i].id+"/edit" %>>Edit team </a></td>
+              <% } %> 
+
             <% } %> 
+            <td><img src= <%= pokeData.pokemons[i].sprites.front_default %> ></img> </td>
+            <% base_exp=base_exp+pokeData.pokemons[i].base_experience%>
+            <% c++ %>
 
-          <% } %> 
-          <td><%= pokeData.pokemons[i].id %></td>
-          <% c++ %>
-
-      <% } %>
+        <% } %>
+        <td>Tot exp: <%= base_exp%></td>
 
       </tr>
       <% if(c==0) { %>
@@ -37,8 +42,6 @@
         </tr>
       <% } %>
     </table>
-
-    <%= pokeData %>
 
     <p> <a href="/">Home</a></p>
   </body>

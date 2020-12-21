@@ -27,12 +27,12 @@ router.get('/', function(req, res, next) {
         var pokeid=rows[i].pokeid
         var received = 0;
         if (sessionStorage.getItem(pokeid) != null) {
-          console.log("Found pokemon "+pokeid)
+          console.log("Found pokemon "+pokeid+" in cache")
           var pokemon=sessionStorage.getItem(pokeid)
           pokeData.pokemons.push(pokemon);
         }
         else{
-          console.log("Not found pokemon "+pokeid)
+          console.log("Not found pokemon "+pokeid+" in cache")
           fetch('https://pokeapi.co/api/v2/pokemon/'+pokeid)
             .then(function(response){
             response.json()
@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
               //console.log(JSON.stringify(p))
               sessionStorage.setItem(pokeid, JSON.stringify(p));
               pokeData.pokemons.push(p);
-              console.log(JSON.stringify(p).substring(0,32))
+              //console.log(JSON.stringify(p).substring(0,32))
               received+=1;
               if(rows.length==received){
                 download.emit('completed')
