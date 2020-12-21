@@ -10,6 +10,7 @@
     <hr>
     <button onclick=findPokemon()>Gotta catch'em all!</button>
 
+    <p><span id="poke-head"></span></p>
     <h2><span id="poke-name"></span></h2>
     <p><span id="poke-exp"></span></p>
     <p><span id="poke-img"></img></span></p>
@@ -20,37 +21,48 @@
       <input type="text" name="name" required="required" placeholder="My Team">
       <button type="submit">Create</button>
     </form>
+    <p> <a href="/">Home</a></p>
+
 
     <script>
-
+      
       function findPokemon(){
-    
-        fetch('https://pokeapi.co/api/v2/pokemon/'+Math.floor(Math.random() * 897))
-        .then(function(response){
-          response.json()
-          .then(function(pokemon){
-            console.log(pokemon)
-            document.getElementById("poke-name").innerHTML = "<b>Name:</b> "+pokemon.name;
-            document.getElementById("poke-exp").innerHTML = "<b>Base exp: </b>"+pokemon.base_experience;
-            document.getElementById("poke-img").innerHTML = "<img src= "+pokemon.sprites.front_default+"></img>";
-
-            var abs = "<b>Abilities: </b> "+pokemon.abilities[0].ability.name
-            for(var i=1; i<pokemon.abilities.length; i++){
-              abs=abs+", "+pokemon.abilities[i].ability.name
-            }
-            document.getElementById("poke-abt").innerHTML = abs+".";
-
-            var t = "<b>Types: </b>"+pokemon.types[0].type.name
-            for(var i=1; i<pokemon.types.length; i++){
-              t=t+", "+pokemon.types[i].type.name
-            }
-            document.getElementById("poke-types").innerHTML = t+".";
+        var id = Math.floor(Math.random() * 897 +1)
+        if (sessionStorage.getItem(id)){
+          printPokemon(JSON.parse(sessionStorage.getItem(id)))
+        }
+        else{
+          fetch('https://pokeapi.co/api/v2/pokemon/'+id)
+          .then(function(response){
+            response.json()
+            .then(function(pokemon){
+              console.log(pokemon)
+              printPokemon(pokemon)
+            })
           })
-        })
+        }
       }
+
+      function printPokemon(pokemon){
+        document.getElementById("poke-head").innerHTML = "Added new pokemon:";
+        document.getElementById("poke-name").innerHTML = "<b>Name:</b> "+pokemon.name;
+        document.getElementById("poke-exp").innerHTML = "<b>Base exp: </b>"+pokemon.base_experience;
+        document.getElementById("poke-img").innerHTML = "<img src= "+pokemon.sprites.front_default+"></img>";
+
+        var abs = "<b>Abilities: </b> "+pokemon.abilities[0].ability.name
+        for(var i=1; i<pokemon.abilities.length; i++){
+          abs=abs+", "+pokemon.abilities[i].ability.name
+        }
+        document.getElementById("poke-abt").innerHTML = abs+".";
+
+        var t = "<b>Types: </b>"+pokemon.types[0].type.name
+        for(var i=1; i<pokemon.types.length; i++){
+          t=t+", "+pokemon.types[i].type.name
+        }
+        document.getElementById("poke-types").innerHTML = t+".";
+        sessionStorage.setItem(pokemon.id, JSON.stringify(pokemon));
+      }
+
     </script>
-
-  <p> <a href="/">Home</a></p>
-
   </body>
 </html>

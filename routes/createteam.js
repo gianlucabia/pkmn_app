@@ -13,8 +13,9 @@ router.get('/', function(req, res, next) {
         res.send('Query error: ' + err0.sqlMessage);
         console.log('Query error: ' + err0.sqlMessage)
     }else{
-      console.log("n: "+rows0[0].n)
-      if (JSON.stringify(rows0[0].n)=="0"){
+      var teamId= rows0[0].n
+      console.log("n: "+teamId)
+      if (JSON.stringify(teamId)=="0"){
         isEmpty=true;
       }
       if (isEmpty){
@@ -40,8 +41,24 @@ router.get('/', function(req, res, next) {
         });
       }
     }
+    /*
+    var l = sessionStorage.length;
+    for (var i=0; i<l; i++){
+      var key = sessionStorage.key(0);
+      var pokeid = sessionStorage.getItem(key); 
+      sessionStorage.removeItem(key);
+      db.query("INSERT INTO pokemon VALUES ("+teamId+","+pokeId+");", (err, rows, fields) => {
+        if(err){
+          res.send('Query error: ' + err.sqlMessage);
+          console.log('Query error: ' + err.sqlMessage)
+        }else{
+          var data = JSON.stringify(rows);
+          console.log('Team inserted correctly: '+ data);
+          res.render('createteam.ejs', {name: req.query.name});
+        }
+      });
+    }*/
   });
-  
 });
 
 module.exports = router;
