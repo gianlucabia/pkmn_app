@@ -1,5 +1,5 @@
 var express = require('express');
-var sessionStorage = require('node-sessionstorage')
+var sessionStorage = require('sessionstorage')
 var fetch = require('node-fetch')
 var router = express.Router();
 var EventEmitter = require('events').EventEmitter;
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
   var download = new EventEmitter();
   const mutex = new Mutex();
 
-  db.query("SELECT * FROM teams INNER JOIN pokemon ON teams.id = pokemon.teamid ", (err, rows, fields) => {
+  db.query("SELECT * FROM teams INNER JOIN pokemon ON teams.id = pokemon.teamid ORDER BY teams.id DESC ", (err, rows, fields) => {
     if(err){
         res.send('Query error: ' + err.sqlMessage);
     }else{
@@ -24,15 +24,18 @@ router.get('/', function(req, res, next) {
       var pokemons = []
       pokeData.pokemons = pokemons;
       
-      for (var i=0; i<rows.length; i++){
+      for (let i=0; i<rows.length; i++){
+
+        setTimeout(function() { alert(i) }, 0);
 
         var pokeid=rows[i].pokeid
         var received = 0;
         console.log("Tot pkmn: "+rows.length)
+        
         if (sessionStorage.getItem(pokeid) != null) {
           console.log("Found pokemon "+pokeid+" in cache")
           var pokemon=sessionStorage.getItem(pokeid)
-          //console.log(pokemon)
+          console.log("poke id: "+pokemon.id+" name :"+pokemon.name)
           pokeData.pokemons.push(JSON.parse(pokemon));
           mutex
             .acquire()
@@ -82,6 +85,8 @@ router.get('/', function(req, res, next) {
 
       download.on('completed', function(){
         console.log("completed!")
+        console.log("data: "+rows)
+        console.log("pokeData: "+pokeData)
         res.render('list.ejs', {data: rows, pokeData: pokeData})
       });
       
