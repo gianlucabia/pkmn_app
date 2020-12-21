@@ -5,7 +5,11 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Team created correctly</h1>
+    <% if (teamid >= 0) {%>
+      <h1>Team created correctly</h1>
+    <% } else {%>
+      <h1>Error creating team: select at least 1 pokemon please.</h1>
+      <% } %>
     <hr>
     <p>Name: <%= name%></p>
     <p> <a href="/team/create">Create another team</a></p>

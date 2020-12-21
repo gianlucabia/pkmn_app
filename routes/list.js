@@ -24,13 +24,6 @@ router.get('/', function(req, res, next) {
       var pokemons = []
       pokeData.pokemons = pokemons;
       
-      var c=0
-
-      if (rows.length==0){
-        console.log("NO TEAMS")
-        download.emit('completed')
-      }
-
       for (var i=0; i<rows.length; i++){
 
         var pokeid=rows[i].pokeid
@@ -46,7 +39,6 @@ router.get('/', function(req, res, next) {
             .then(function(release) {
               console.log("acquired mutex")
               received+=1;
-              c+=1;
               console.log("Received: "+received)
               console.log("released mutex")
               mutex.release()
@@ -71,7 +63,6 @@ router.get('/', function(req, res, next) {
                 .then(function(release) {
                   console.log("acquired mutex")
                   received+=1;
-                  c+=1;
                   console.log("Received: "+received)
                   console.log("released mutex")
                   mutex.release()
@@ -83,6 +74,11 @@ router.get('/', function(req, res, next) {
           })
         }
       }      
+
+      if (rows.length==0){
+        console.log("NO TEAMS")
+        res.render('list.ejs', {data: rows, pokeData: pokeData})
+      }
 
       download.on('completed', function(){
         console.log("completed!")

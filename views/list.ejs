@@ -33,7 +33,9 @@
             <% c++ %>
 
         <% } %>
-        <td>Tot exp: <%= base_exp%></td>
+        <% if (data.length>0) {%>
+          <td>Tot exp: <%= base_exp%></td>
+        <% } %>
 
       </tr>
       <% if(c==0) { %>
