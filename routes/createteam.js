@@ -5,8 +5,8 @@ const db = require('db');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  console.log("Name: "+req.query.name);
-  console.log(req.query.name!="");
+  console.log("Request: "+JSON.stringify(req.query));
+
   var isEmpty=false;
   db.query("SELECT COUNT(id) AS n FROM teams; ", (err0, rows0, fields) => {
     if(err0){
@@ -18,7 +18,9 @@ router.get('/', function(req, res, next) {
       if (JSON.stringify(teamId)=="0"){
         isEmpty=true;
       }
+
       if (isEmpty){
+        //query if db is empty
         db.query("INSERT INTO teams(id,name) VALUES(0,'"+req.query.name+"');", (err1, rows1, fields1) => {
           if(err1){
             res.send('Query error: ' + err1.sqlMessage);
@@ -26,17 +28,26 @@ router.get('/', function(req, res, next) {
           else{
             var data = JSON.stringify(rows1);
             console.log('Team inserted correctly: '+ data);
-            res.render('createteam.ejs', {name: req.query.name});
+            for (var key of Object.keys(req.query)) {
+              console.log(key + " -> " + req.query[key])
+              //insert into pokemon teamID, req.query[key]
+            }
+            res.render('createteam.ejs', {name: req.query.name, teamid: teamId});
           }
         });
       } else{
+        //query if db is not empty
           db.query("INSERT INTO teams(id,name) SELECT MAX(id)+1,'"+req.query.name+"' FROM teams;", (err, rows, fields) => {
           if(err){
-            
+            res.send('Query error: ' + err.sqlMessage);
           }else{
             var data = JSON.stringify(rows);
             console.log('Team inserted correctly: '+ data);
-            res.render('createteam.ejs', {name: req.query.name});
+            for (var key of Object.keys(req.query)) {
+              console.log(key + " -> " + req.query[key])
+              //insert teamID, pokeid
+            }
+            res.render('createteam.ejs', {name: req.query.name, teamid: teamId});
           }
         });
       }
