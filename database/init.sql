@@ -6,6 +6,9 @@ id INT PRIMARY KEY,
 name VARCHAR (64)
 );
 
-INSERT INTO teams VALUES ('1', 'rocket'), ('2', 'hash');
+CREATE TABLE pokemon(
+groupid INT FOREIGN KEY REFERENCES pokemon(id),
+pokeid INT
+);
 
 

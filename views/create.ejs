@@ -18,7 +18,11 @@
     <p><span id="poke-types"></span></p>
 
     <form action="/team/create/createteam" method="GET">
-      <input type="text" name="name" required="required" placeholder="My Team">
+      <div id="poke-list">
+        <label>Pokemon list:</label>
+
+      </div>
+      <input type="text" name="name" required="required" placeholder="Insert team name">
       <button type="submit">Create</button>
     </form>
     <p> <a href="/">Home</a></p>
@@ -44,7 +48,8 @@
       }
 
       function printPokemon(pokemon){
-        document.getElementById("poke-head").innerHTML = "Added new pokemon:";
+
+        // print pokemon in page
         document.getElementById("poke-name").innerHTML = "<b>Name:</b> "+pokemon.name;
         document.getElementById("poke-exp").innerHTML = "<b>Base exp: </b>"+pokemon.base_experience;
         document.getElementById("poke-img").innerHTML = "<img src= "+pokemon.sprites.front_default+"></img>";
@@ -61,6 +66,24 @@
         }
         document.getElementById("poke-types").innerHTML = t+".";
         sessionStorage.setItem(pokemon.id, JSON.stringify(pokemon));
+
+        // add pokemon to the list
+        //var li = document.createElement("li");
+        var input = document.createElement("input");
+        input.setAttribute('type','checkbox')
+        input.setAttribute('id',pokemon.id)
+        input.setAttribute('value',pokemon.name)
+        input.setAttribute('name',pokemon.name)
+        input.setAttribute('checked',true)
+
+        var lbl = document.createElement('label');
+        lbl.setAttribute('for', pokemon.id);
+        lbl.appendChild(document.createTextNode(pokemon.name));
+
+        //li.appendChild(input);
+        document.getElementById("poke-list").append(input);
+        document.getElementById("poke-list").append(lbl);
+        //document.getElementById("poke-list").innerHTML = document.getElementById("poke-list").innerHTML + ("<li><input type= checkbox>"+pokemon.name+"</li>");
       }
 
     </script>
