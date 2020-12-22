@@ -23,59 +23,65 @@ router.get('/', function(req, res, next) {
       var pokeData = {};
       var pokemons = []
       pokeData.pokemons = pokemons;
-      
+      var received = 0;
+
       for (let i=0; i<rows.length; i++){
 
-        //setTimeout(function() { alert(i) }, 0);
+        (function(j){ 
 
-        var pokeid=rows[i].pokeid
-        var received = 0;
-        console.log("Tot pkmn: "+rows.length)
-        
-        if (sessionStorage.getItem(pokeid) != null) {
-          console.log("Found pokemon "+pokeid+" in cache")
-          var pokemon=sessionStorage.getItem(pokeid)
-          console.log("poke id: "+pokemon.id+" name :"+pokemon.name)
-          pokeData.pokemons.push(JSON.parse(pokemon));
-          mutex
-            .acquire()
-            .then(function(release) {
-              console.log("acquired mutex")
-              received+=1;
-              console.log("Received: "+received)
-              console.log("released mutex")
-              mutex.release()
-              if(rows.length==received){
-                download.emit('completed')
-              }
-            });
+          console.log("iteration: "+j)
           
-        }
-        else{
-          console.log("Not found pokemon "+pokeid+" in cache")
-          fetch('https://pokeapi.co/api/v2/pokemon/'+pokeid)
-            .then(function(response){
-            response.json()
-            .then(function(p){
-              //console.log(JSON.stringify(p))
-              sessionStorage.setItem(pokeid, JSON.stringify(p));
-              pokeData.pokemons.push(p);
-              //console.log(JSON.stringify(p).substring(0,32))
-              mutex
-                .acquire()
-                .then(function(release) {
-                  console.log("acquired mutex")
-                  received+=1;
-                  console.log("Received: "+received)
-                  console.log("released mutex")
+          var pokeid=rows[j].pokeid
+          console.log("Tot pkmn: "+rows.length)
+          
+          if (sessionStorage.getItem(pokeid) != null) {
+            mutex
+              .acquire()
+              .then(function(release) {
+                console.log("acquired mutex")
+                var pokemon=sessionStorage.getItem(pokeid)
+                pokeData.pokemons.push(JSON.parse(pokemon));
+            
+                received+=1;
+                console.log("Received: "+received)
+                console.log("released mutex")
+                
+                if(rows.length==received){
                   mutex.release()
-                  if(rows.length==received){
-                    download.emit('completed')
-                  }
-                });
+                  download.emit('completed')
+                }
+                mutex.release()
+              });
+            
+          }
+          else{
+            mutex
+                  .acquire()
+                  .then(function(release) {
+                    console.log("acquired mutex")
+                    fetch('https://pokeapi.co/api/v2/pokemon/'+pokeid)
+                      .then(function(response){
+                      response.json()
+                      .then(function(p){
+                        //console.log(JSON.stringify(p))
+                        sessionStorage.setItem(pokeid, JSON.stringify(p));
+                        pokeData.pokemons.push(p);
+                        //console.log(JSON.stringify(p).substring(0,32))
+                
+                        received+=1;
+                        console.log("Received: "+received)
+                        console.log("released mutex")
+                        
+                        if(rows.length==received){
+                          mutex.release()
+                          download.emit('completed')
+                        }
+                        mutex.release()
+                  });
+              })
             })
-          })
-        }
+          }
+        })(i);
       }      
 
       if (rows.length==0){
