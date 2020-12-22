@@ -45,6 +45,7 @@ app.get('/team/:teamid/edit', function(req, res, next) {
   }else{
     db.query("SELECT * FROM teams INNER JOIN pokemon ON teams.id = pokemon.teamid WHERE id = "+ req.params.teamid+";", (err, rows, fields) => {
       if(err){
+          console.log("Query: "+"SELECT * FROM teams INNER JOIN pokemon ON teams.id = pokemon.teamid WHERE id = "+ req.params.teamid+";")
           res.send('Query error: ' + err.sqlMessage);
       }else{
         var data = JSON.stringify(rows)

@@ -5,6 +5,7 @@ const db = require('db');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  console.log("Request: "+JSON.stringify(req.query));
   console.log("Name: "+req.query.name);
   console.log("id: "+req.query.id);
   db.query("UPDATE teams SET name = '"+req.query.name+"' WHERE id = "+req.query.id+";", (err, rows, fields) => {

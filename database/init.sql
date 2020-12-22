@@ -1,14 +1,12 @@
-CREATE DATABASE pkmn;
+CREATE DATABASE IF NOT EXISTS pkmn;
 USE pkmn;
 
-CREATE TABLE teams(
+CREATE TABLE IF NOT EXISTS teams(
 id INT PRIMARY KEY,
 name VARCHAR(64)
 );
 
-CREATE TABLE pokemon(
+CREATE TABLE IF NOT EXISTS pokemon(
 teamid INT,
 pokeid INT
 );
-
-

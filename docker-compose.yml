@@ -1,17 +1,37 @@
 version: "3.7"
 
 services:
-  database:
-    image: mysql:5.7
+  app:
+    build:
+      context: .
+      dockerfile: Application.Dockerfile
+    container_name: app
+    depends_on:
+      - database
+    restart: always
     ports:
-        - "3306:3306"
-    command: --init-file /database/init.sql
-    volumes:
-        - ./init.sql:/database/init.sql
+      - 8080:8080
+    networks:
+      - poke_network
+
+  database:
+    build:
+      context: .
+      dockerfile: Database.Dockerfile
+    container_name: database
     environment:
-        MYSQL_ROOT_USER: root
-        MYSQL_ROOT_PASSWORD: MyPass-1
-        MYSQL_DATABASE: pkmn
-        MYSQL_USER: root
-        MYSQL_PASSWORD: MyPass-1
-        
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: MyPass-1
+      MYSQL_DATABASE: pkmn
+      MYSQL_USER: root
+      MYSQL_PASSWORD: MyPass-1
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - poke_network
+
+networks:
+  poke_network:
+    name: poke_network
+    driver: bridge

@@ -10,6 +10,7 @@ const db = require('db');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
+  console.log("Request: "+JSON.stringify(req.query));
   var download = new EventEmitter();
   const mutex = new Mutex();
 
