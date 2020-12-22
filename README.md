@@ -33,7 +33,7 @@ Here we go: you have youre Pokèmon App ready on http://localhost:8080/ .When yo
 docker-compose down
 ```
 
-That's it :)
+Remember to free `:8080` and `:3306` ports if necessary. That's it :)
 
 ## Acknowledgement
 
