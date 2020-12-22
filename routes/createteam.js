@@ -8,12 +8,15 @@ router.get('/', function(req, res, next) {
   console.log("Request: "+JSON.stringify(req.query));
 
   var isEmpty=false;
-  db.query("SELECT COUNT(id) AS n FROM teams; ", (err0, rows0, fields) => {
+  db.query("SELECT MAX(id)+1 AS n FROM teams; ", (err0, rows0, fields) => {
     if(err0){
         res.send('Query error: ' + err0.sqlMessage);
         console.log('Query error: ' + err0.sqlMessage)
     }else{
-      var teamId= rows0[0].n
+      var teamId = 0;
+      if (rows0[0].n != null){
+        teamId=rows0[0].n
+      }
       console.log("teamid: "+teamId)
       if (JSON.stringify(teamId)=="0"){
         isEmpty=true;
