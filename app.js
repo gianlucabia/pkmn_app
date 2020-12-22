@@ -43,13 +43,13 @@ app.get('/team/:teamid/edit', function(req, res, next) {
   if(!validator.isNumeric(req.params.teamid)){
     res.send('Parameter error: invalid parameters');
   }else{
-    db.query("SELECT * FROM teams WHERE id = "+ req.params.teamid+";", (err, rows, fields) => {
+    db.query("SELECT * FROM teams INNER JOIN pokemon ON teams.id = pokemon.teamid WHERE id = "+ req.params.teamid+";", (err, rows, fields) => {
       if(err){
           res.send('Query error: ' + err.sqlMessage);
       }else{
         var data = JSON.stringify(rows)
         console.log('Query result: '+ data)
-        res.render('edit.ejs', {name: rows[0].name, id: rows[0].id})
+        res.render('edit.ejs', {name: rows[0].name, id: rows[0].id, data: rows})
       }
     });
   }

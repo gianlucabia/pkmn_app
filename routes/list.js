@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
       
       for (let i=0; i<rows.length; i++){
 
-        setTimeout(function() { alert(i) }, 0);
+        //setTimeout(function() { alert(i) }, 0);
 
         var pokeid=rows[i].pokeid
         var received = 0;
