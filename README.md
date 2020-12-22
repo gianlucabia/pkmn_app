@@ -27,7 +27,7 @@ docker-compose build
 docker-compose up
 ```
 
-When you're done just stop it. 
+Here we go: you have youre Pokèmon App ready on http://localhost:8080/ .When you're done just stop it. 
 
 ```sh
 docker-compose down
