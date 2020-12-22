@@ -9,7 +9,7 @@ This repository contains all the needed files for the project.
 
 ### Application
 
-The pokemon application is located inside the `pkmn_app` folder. It developed according in [node.js](https://nodejs.org/it/) and JS, exploiting the [Express](https://expressjs.com/) framework and the frontend uses HTML and CSS.
+The Pokèmon App is located inside the `pkmn_app` folder. It developed according in [node.js](https://nodejs.org/it/) and JS, exploiting the [Express](https://expressjs.com/) framework and the frontend uses HTML and CSS.
 
 ### Database
 
