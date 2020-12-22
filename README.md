@@ -4,7 +4,7 @@ This repository contains all the needed files for the project.
 
 - [Application](#application)
 - [Database](#database)
-  - [Deploy](#deploy)
+- [Deploy](#deploy)
 
 
 ### Application
