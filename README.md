@@ -5,6 +5,7 @@ This repository contains all the needed files for the project.
 - [Application](#application)
 - [Database](#database)
 - [Deploy](#deploy)
+- [Utility](#utility)
 - [Acknowledgement](#acknowledgement)
 
 
@@ -33,11 +34,23 @@ Here we go: you have youre Pokèmon App ready on http://localhost:8080/ .When yo
 docker-compose down
 ```
 
+### Utility
+
+
 Remember to free `:8080` or `:3306` ports if necessary. 
 
 ```sh
 sudo lsof -i :<port-number>
 sudo kill <pid>
+```
+
+Also you should stop and remove other containers with the same name.
+
+```sh
+docker stop /poke_database
+docker rm /poke_database
+docker stop /poke_app
+docker rm /poke_app
 ```
 
 That's it :)
