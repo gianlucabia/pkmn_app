@@ -56,30 +56,30 @@ router.get('/', function(req, res, next) {
           }
           else{
             mutex
-                  .acquire()
-                  .then(function(release) {
-                    console.log("acquired mutex")
-                    fetch('https://pokeapi.co/api/v2/pokemon/'+pokeid)
-                      .then(function(response){
-                      response.json()
-                      .then(function(p){
-                        //console.log(JSON.stringify(p))
-                        sessionStorage.setItem(pokeid, JSON.stringify(p));
-                        pokeData.pokemons.push(p);
-                        //console.log(JSON.stringify(p).substring(0,32))
-                
-                        received+=1;
-                        console.log("Received: "+received)
-                        console.log("released mutex")
-                        
-                        if(rows.length==received){
-                          mutex.release()
-                          download.emit('completed')
-                        }
+              .acquire()
+              .then(function(release) {
+                console.log("acquired mutex")
+                fetch('https://pokeapi.co/api/v2/pokemon/'+pokeid)
+                  .then(function(response){
+                    response.json()
+                    .then(function(p){
+                      //console.log(JSON.stringify(p))
+                      sessionStorage.setItem(pokeid, JSON.stringify(p));
+                      pokeData.pokemons.push(p);
+                      //console.log(JSON.stringify(p).substring(0,32))
+              
+                      received+=1;
+                      console.log("Received: "+received)
+                      console.log("released mutex")
+                      
+                      if(rows.length==received){
                         mutex.release()
-                  });
+                        download.emit('completed')
+                      }
+                      mutex.release()
+                    });
+                  })
               })
-            })
           }
         })(i);
       }      

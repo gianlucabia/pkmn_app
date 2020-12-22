@@ -3,11 +3,11 @@ USE pkmn;
 
 CREATE TABLE teams(
 id INT PRIMARY KEY,
-name VARCHAR (64)
+name VARCHAR(64)
 );
 
 CREATE TABLE pokemon(
-groupid INT FOREIGN KEY REFERENCES pokemon(id),
+teamid INT,
 pokeid INT
 );
 

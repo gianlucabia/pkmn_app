@@ -11,9 +11,17 @@
       <input type="number" name="n" id="n" value="n" placeholder=<%= id %> disabled>
       <input type="hidden" id="id" name="id" value= <%= id %> placeholder=<%= name %>>
       <input type="text" name="name" placeholder=<%= name %>>
+
+      <% for(var i=0; i < data.length; i++) { %>
+        
+        <p><input type="checkbox" checked=true name=<% data[i].pokeid %>> Pokemon ID: <%=data[i].pokeid %> </p>
+
+      <% } %>
+
       <button type="submit">Update</button>
     </form>
-    
+
+    <p> <a href="/team/list">Back to list</a></p>
     <p> <a href="/">Home</a></p>
   </body>
 </html>
