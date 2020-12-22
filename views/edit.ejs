@@ -10,11 +10,15 @@
     <form action="/team/update" method="GET">
       <input type="number" name="n" id="n" value="n" placeholder=<%= id %> disabled>
       <input type="hidden" id="id" name="id" value= <%= id %> placeholder=<%= name %>>
-      <input type="text" name="name" placeholder=<%= name %>>
+      <input type="text" name="name" placeholder="New name">
 
+      <p>Remove selected pokemon:</p>
       <% for(var i=0; i < data.length; i++) { %>
         
-        <p><input type="checkbox" checked=true name=<% data[i].pokeid %>> Pokemon ID: <%=data[i].pokeid %> </p>
+        <p>
+        <input type="checkbox" name= <%= data[i].pokeid %> id= <%= data[i].pokeid %> value=<%= data[i].pokeid %> >
+        <label for=<%= data[i].pokeid %>><%= data[i].pokeid %></label>
+        </p>
 
       <% } %>
 

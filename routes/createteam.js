@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
               delete req.query.name;
               
               // prepare insert query
-              var q=createQueryFromJson(teamId,req.query);
+              var q=createInsertFromJson(teamId,req.query);
 
               // add pokemon to team
               db.query(q, (errq, rowsq, fields) => {
@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
               
               // prepare insert query
               
-              var q=createQueryFromJson(teamId,req.query);
+              var q=createInsertFromJson(teamId,req.query);
 
               // add pokemon to team
               db.query(q, (errq, rowsq, fields) => {
@@ -69,7 +69,7 @@ router.get('/', function(req, res, next) {
                   res.send('Query error: ' + errq.sqlMessage);
                 }else{
                   var dataq = JSON.stringify(rowsq);
-                  console.log('Team inserted correctly: '+ dataq);                
+                  console.log('Team insteamerted correctly: '+ dataq);                
                   res.render('createteam.ejs', {name: teamName, teamid: teamId});
                 }
               });
@@ -85,7 +85,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-function createQueryFromJson(teamid,obj){
+function createInsertFromJson(teamid,obj){
   // prepare insert query
   
   var q = "INSERT INTO pokemon(teamid,pokeid) VALUES"
