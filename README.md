@@ -5,17 +5,18 @@ This repository contains all the needed files for the project.
 - [Application](#application)
 - [Database](#database)
 - [Deploy](#deploy)
+- [Acknowledgement](#acknowledgement)
 
 
 ### Application
 
-The Pokèmon App is located inside the `pkmn_app` folder. It developed according in [node.js](https://nodejs.org/it/) and JS, exploiting the [Express](https://expressjs.com/) framework and the frontend uses HTML and CSS.
+The Pokèmon App is located inside the `pkmn_app` folder. It is developed according to [node.js](https://nodejs.org/it/) and JS, exploiting the [Express](https://expressjs.com/) framework, while the frontend uses HTML, CSS and the [EJS](https://ejs.co/) template engine.
 
 ### Database
 
 The data layer of the Pokèmon App is handled by MySQL.
 
-In order for the application to properly interact with the database, this must be available on `poke_database:3306`, the database name should be `pkmn`, the user `root` with password `MyPass-1`.
+In order for the application to properly interact with the database, this must be available on `poke_database:3306`, the database must be named `pkmn`, the user must be `root` with password `MyPass-1`.
 
 ## Deploy
 
@@ -25,3 +26,15 @@ You can deploy The Pokèmon App with the `docker-compose.yml` file, capable of d
 docker-compose build
 docker-compose up
 ```
+
+When you're done just stop it. 
+
+```sh
+docker-compose down
+```
+
+That's it :)
+
+## Acknowledgement
+
+Made with ❤ by GB.
