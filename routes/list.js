@@ -23,6 +23,7 @@ router.get('/', function(req, res, next) {
 
       var pokeData = {};
       var pokemons = []
+      var types = []
       pokeData.pokemons = pokemons;
       var received = 0;
 
@@ -35,7 +36,10 @@ router.get('/', function(req, res, next) {
           var pokeid=rows[j].pokeid
           console.log("Tot pkmn: "+rows.length)
           
-          if (sessionStorage.getItem(pokeid) != null) {
+          console.log("flag: "+!sessionStorage.getItem(pokeid))
+
+          //TODO: fix session storage not working
+          if (false /*!sessionStorage.getItem(pokeid)*/) {
             mutex
               .acquire()
               .then(function(release) {
@@ -45,7 +49,14 @@ router.get('/', function(req, res, next) {
             
                 received+=1;
                 console.log("Received: "+received)
-                console.log("released mutex")
+                
+                console.log("found pokemon: "+JSON.stringify(pokemon))
+
+                for (j=0; j<pokemon.types.length; j++){
+                  insertUniqueInArray(types, pokemon.types[j])
+                }
+
+                insertPokemonType(p, types)
                 
                 if(rows.length==received){
                   mutex.release()
@@ -71,6 +82,9 @@ router.get('/', function(req, res, next) {
               
                       received+=1;
                       console.log("Received: "+received)
+
+                      insertPokemonType(p, types)
+                    
                       console.log("released mutex")
                       
                       if(rows.length==received){
@@ -87,14 +101,14 @@ router.get('/', function(req, res, next) {
 
       if (rows.length==0){
         console.log("NO TEAMS")
-        res.render('list.ejs', {data: rows, pokeData: pokeData})
+        res.render('list.ejs', {data: rows, pokeData: pokeData,  types: null})
       }
 
       download.on('completed', function(){
         console.log("completed!")
-        console.log("data: "+rows)
-        console.log("pokeData: "+pokeData)
-        res.render('list.ejs', {data: rows, pokeData: pokeData})
+        //console.log("data: "+rows)
+        //console.log("pokeData: "+JSON.stringify(pokeData))
+        res.render('list.ejs', {data: rows, pokeData: pokeData, types: types})
       });
       
     }
@@ -102,3 +116,22 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+function insertPokemonType(pokemon, array){
+
+  for (j=0; j<pokemon.types.length; j++){
+    //console.log("type "+j+": "+pokemon.types[j].type.name)
+    insertUnique(array, pokemon.types[j].type.name)
+  }
+
+}
+
+function insertUnique (array, object){
+
+  if (!array.includes(object)){
+    array.push(object)
+  }
+
+  return array;
+
+}

@@ -34,7 +34,12 @@
 
         <% } %>
         <% if (data.length>0) {%>
-          <td>Tot exp: <%= base_exp%></td>
+          <td><b>Tot exp:</b> <%= base_exp %></td>
+          <td><b>Types: </b>
+            <% for(var i=0; i < types.length; i++) { %>
+              <%= types[i]%>
+            <% } %>
+          </td>
         <% } %>
 
       </tr>
