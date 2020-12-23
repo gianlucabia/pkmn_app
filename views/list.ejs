@@ -64,41 +64,39 @@
         <tr>
           <td>No teams.</td>
         </tr>
-      <% } else {%>
+      <% } %>
 
-        <form>
-          <label for="filter">Filter by type: </label>
-          <select  id="filter" name="filter" >
-            <option value="water" selected="selected">water</option>
-            <option value="rock" >rock</option>
-            <option value="fire" >fire</option>
-            <option value="flying" >flying</option>            
-            <option value="bug" >bug</option>
-            <option value="dark" >dark</option>
-            <option value="grass" >grass</option>
-            <option value="psychic" >psychic</option>
-            <option value="dragon" >dragon</option>
-            <option value="electric" >electric</option>
-            <option value="fairy" >fairy</option>            
-            <option value="fighting" >fighting</option>
-            <option value="ghost" >ghost</option>
-            <option value="ground" >ground</option>
-            <option value="ice" >ice</option>
-            <option value="normal" >normal</option>            
-            <option value="poison" >poison</option>
-            <option value="steel" >steel</option>
-          </select>
+      <form>
+        <label for="filter">Filter by type: </label>
+        <select  id="filter" name="filter" >
+          <option value="water" selected="selected">water</option>
+          <option value="rock" >rock</option>
+          <option value="fire" >fire</option>
+          <option value="flying" >flying</option>            
+          <option value="bug" >bug</option>
+          <option value="dark" >dark</option>
+          <option value="grass" >grass</option>
+          <option value="psychic" >psychic</option>
+          <option value="dragon" >dragon</option>
+          <option value="electric" >electric</option>
+          <option value="fairy" >fairy</option>            
+          <option value="fighting" >fighting</option>
+          <option value="ghost" >ghost</option>
+          <option value="ground" >ground</option>
+          <option value="ice" >ice</option>
+          <option value="normal" >normal</option>            
+          <option value="poison" >poison</option>
+          <option value="steel" >steel</option>
+        </select>
 
-          <button type="submit">Filter</button>
-        </form>
+        <button type="submit">Filter</button>
+      </form>
 
-        <form action="/team/list">
-          <input type="submit" value="Reset" />
-        </form>
+      <form action="/team/list">
+        <input type="submit" value="Reset" />
+      </form>
       
 
-
-      <% } %>
     </table>
 
     <p> <a href="/">Home</a></p>
