@@ -121,14 +121,15 @@ router.get('/', function(req, res, next) {
 
       if (rows.length==0){
         console.log("NO TEAMS")
-        res.render('list.ejs', {data: rows, pokeData: pokeData,  types: null})
+        res.render('list.ejs', {data: rows, pokeData: pokeData,  pokeType: null})
       }
 
       download.on('completed', function(){
         console.log("completed!")
-        console.log("types: "+JSON.stringify(types))
+        //console.log("types: "+JSON.stringify(types))
+        console.log("data: "+JSON.stringify(rows))
         //console.log("pokeData: "+JSON.stringify(pokeData))
-        res.render('list.ejs', {data: rows, pokeData: pokeData, pokeType: types})
+        res.render('list.ejs', {data: rows, pokeData: pokeData, pokeType: types, request: req.query})
       });
       
     }

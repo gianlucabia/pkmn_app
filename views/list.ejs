@@ -14,59 +14,96 @@
       <tr>
         <% for(var i=0; i < data.length; i++) { %>
           
-            <% if (i==0) {%> 
-              <td>Team: </td>
-              <td><b><%= data[i].name %></b></td>
-              <td> <a href=<%= data[i].id+"/edit" %>>Edit </a></td>
-            <%} else { %>     
-              <% if (data[i].id!=data[i-1].id) {%>
-                <td>Tot exp: <%= base_exp%></td>
-                <td><b>Types: </b>
-                  <% for(var j=0; j < pokeType.type[k].length; j++) { %>
-                    <%= pokeType.type[k][j]%>
-                  <% } %>
-                  <% k+=1 %>
-                </td>
-                </tr><tr>
-                <% base_exp=0%>
+            <% if (i==0) {%>
+              <% if(typeof request.filter == 'undefined' || pokeType.type[k].join().includes(request.filter)) { %>
                 <td>Team: </td>
                 <td><b><%= data[i].name %></b></td>
                 <td> <a href=<%= data[i].id+"/edit" %>>Edit </a></td>
+              <% } %>
+            <%} else { %>     
+              <% if (data[i].id!=data[i-1].id) {%>
+                <% if(typeof request.filter == 'undefined' || pokeType.type[k].join().includes(request.filter)) { %>
+                  <td>Tot exp: <%= base_exp%></td>
+                  <td><b>Types: </b>
+                    <% for(var j=0; j < pokeType.type[k].length; j++) { %>
+                      <%= pokeType.type[k][j]%>
+                    <% } %>
+                  </td>
+                <% } %>
+                <% k+=1 %>
+                </tr><tr>
+                <% if(typeof request.filter == 'undefined' || pokeType.type[k].join().includes(request.filter)) { %>
+                  <% base_exp=0%>
+                  <td>Team: </td>
+                  <td><b><%= data[i].name %></b></td>
+                  <td> <a href=<%= data[i].id+"/edit" %>>Edit </a></td>
+                <% } %>
               <% } %> 
 
-            <% } %> 
-            <td><img src= <%= pokeData.pokemons[i].sprites.front_default %> ></img> </td>
-            <% base_exp=base_exp+pokeData.pokemons[i].base_experience%>
-            <% c++ %>
-        
+            <% } %>
+            <% if(typeof request.filter == 'undefined' || pokeType.type[k].join().includes(request.filter)) { %>
+              <td><img src= <%= pokeData.pokemons[i].sprites.front_default %> ></img> </td>
+              <% base_exp=base_exp+pokeData.pokemons[i].base_experience%>
+              <% c++ %>
+            <% } %>
+                  
           
         <% } %>
         <% if (data.length>0) {%>
-          <td><b>Tot exp:</b> <%= base_exp %></td>
-          <td><b>Types: </b>
-            <% for(var j=0; j < pokeType.type[k].length; j++) { %>
-              <%= pokeType.type[k][j]%>
-            <% } %>
-          </td>
+          <% if(typeof request.filter == 'undefined' || pokeType.type[k].join().includes(request.filter)) { %>
+            <td><b>Tot exp:</b> <%= base_exp %></td>
+            <td><b>Types: </b>
+              <% for(var j=0; j < pokeType.type[k].length; j++) { %>
+                <%= pokeType.type[k][j]%>
+              <% } %>
+            </td>
+          <% } %>
         <% } %>
-
       </tr>
       <% if(c==0) { %>
         <tr>
-          <td>No teams created</td>
+          <td>No teams.</td>
         </tr>
       <% } else {%>
 
-        <form action="/team/list" method="GET">
-      
-          <input type="text" id="filter" name="filter" placeholder="Filter by type">
-          
+        <form>
+          <label for="filter">Filter by type: </label>
+          <select  id="filter" name="filter" >
+            <option value="water" selected="selected">water</option>
+            <option value="rock" >rock</option>
+            <option value="fire" >fire</option>
+            <option value="flying" >flying</option>            
+            <option value="bug" >bug</option>
+            <option value="dark" >dark</option>
+            <option value="grass" >grass</option>
+            <option value="psychic" >psychic</option>
+            <option value="dragon" >dragon</option>
+            <option value="electric" >electric</option>
+            <option value="fairy" >fairy</option>            
+            <option value="fighting" >fighting</option>
+            <option value="ghost" >ghost</option>
+            <option value="ground" >ground</option>
+            <option value="ice" >ice</option>
+            <option value="normal" >normal</option>            
+            <option value="poison" >poison</option>
+            <option value="steel" >steel</option>
+          </select>
+
           <button type="submit">Filter</button>
         </form>
+
+        <form action="/team/list">
+          <input type="submit" value="Reset" />
+        </form>
+      
+
 
       <% } %>
     </table>
 
     <p> <a href="/">Home</a></p>
+
+    </script>
+
   </body>
 </html>
