@@ -10,6 +10,7 @@
     <table>
       <% var c=0 %>
       <% var base_exp=0 %>
+      <% var k=0 %>
       <tr>
         <% for(var i=0; i < data.length; i++) { %>
           
@@ -20,6 +21,12 @@
             <%} else { %>     
               <% if (data[i].id!=data[i-1].id) {%>
                 <td>Tot exp: <%= base_exp%></td>
+                <td><b>Types: </b>
+                  <% for(var j=0; j < pokeType.type[k].length; j++) { %>
+                    <%= pokeType.type[k][j]%>
+                  <% } %>
+                  <% k+=1 %>
+                </td>
                 </tr><tr>
                 <% base_exp=0%>
                 <td>Team: </td>
@@ -31,13 +38,14 @@
             <td><img src= <%= pokeData.pokemons[i].sprites.front_default %> ></img> </td>
             <% base_exp=base_exp+pokeData.pokemons[i].base_experience%>
             <% c++ %>
-
+        
+          
         <% } %>
         <% if (data.length>0) {%>
           <td><b>Tot exp:</b> <%= base_exp %></td>
           <td><b>Types: </b>
-            <% for(var i=0; i < types.length; i++) { %>
-              <%= types[i]%>
+            <% for(var j=0; j < pokeType.type[k].length; j++) { %>
+              <%= pokeType.type[k][j]%>
             <% } %>
           </td>
         <% } %>
@@ -47,6 +55,15 @@
         <tr>
           <td>No teams created</td>
         </tr>
+      <% } else {%>
+
+        <form action="/team/list" method="GET">
+      
+          <input type="text" id="filter" name="filter" placeholder="Filter by type">
+          
+          <button type="submit">Filter</button>
+        </form>
+
       <% } %>
     </table>
 
